@@ -1,8 +1,7 @@
 import pickle
 
 import numpy as np
-from flask import Flask, request, jsonify
-
+from flask import Flask, request, jsonify, render_template
 
 model = pickle.load(open('model.pkl','rb'))
 
@@ -10,7 +9,12 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "Hello word"
+    #return "Hello word"
+    return render_template("indexhome.html")
+@app.route('/test')
+def hometest():
+    #return "Hello word"
+    return render_template("testDesign.html")
 
 
 @app.route('/predict', methods=['POST'])
@@ -41,7 +45,8 @@ def predict():
 
 
 
-    return jsonify({'xAttack':str(result)})
+    #return jsonify({'xAttack':str(result)})
+    return render_template("indexhome.html", prediction_text = "The attack is  {}".format(result))
 
 if __name__=='__main__':
     app.run(debug=True)
